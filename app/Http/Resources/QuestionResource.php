@@ -21,7 +21,7 @@ class QuestionResource extends JsonResource {
             'body' => $this->body,
             'created_at' => $this->created_at->diffForHumans(),
             'user' => $this->user->name,
-            'category' => $this->category->name
+            'category' => $this->category
         ];
     }
 }
