@@ -6,7 +6,6 @@ use App\Http\Resources\QuestionResource;
 use App\Model\Question;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use mysql_xdevapi\Collection;
 
 class QuestionController extends Controller {
     /**
@@ -17,7 +16,7 @@ class QuestionController extends Controller {
     public function index()
     {
         //
-       return QuestionResource::collection(Question::latest()->get());
+        return QuestionResource::collection(Question::latest()->get());
     }
 
 
@@ -30,7 +29,9 @@ class QuestionController extends Controller {
     public function store(Request $request)
     {
 //        auth()->user()->question()->create($request->all());
-        Question::create();
+        $input = $request->all();
+        $input['slug'] = str_slug($request->title);
+        Question::create($input);
         return response('Created', Response::HTTP_CREATED);
     }
 
@@ -47,17 +48,6 @@ class QuestionController extends Controller {
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Question $question
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Question $question)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
@@ -67,6 +57,8 @@ class QuestionController extends Controller {
     public function update(Request $request, Question $question)
     {
         //
+        $question->update($request->all());
+        return response('Updated', Response::HTTP_ACCEPTED);
     }
 
     /**

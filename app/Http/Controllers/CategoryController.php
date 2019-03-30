@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Resources\CategoryResource;
+use Illuminate\Http\Response;
 use App\Model\Category;
 use Illuminate\Http\Request;
 
@@ -15,16 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return CategoryResource::collection(Category::latest()->get());
     }
 
     /**
@@ -36,6 +28,10 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $input = $request->all();
+        $input['slug'] = str_slug($request->name);
+        Category::create($input);
+        return response('Created',Response::HTTP_CREATED);
     }
 
     /**
@@ -47,6 +43,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         //
+        return new CategoryResource($category);
     }
 
     /**
@@ -70,6 +67,10 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+        $input = $request->all();
+        $input['slug'] = str_slug($request->name);
+        $category->update($input);
+        return response('Updated',Response::HTTP_ACCEPTED);
     }
 
     /**
@@ -81,5 +82,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         //
+        $category->delete();
+        return response('Deleted',Response::HTTP_NO_CONTENT);
     }
 }
