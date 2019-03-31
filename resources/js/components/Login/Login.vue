@@ -25,7 +25,12 @@
                                     required>
                             </v-text-field>
                             <v-card-actions>
-                                <v-btn type="submit" primary large block>Login</v-btn>
+                                <v-btn type="submit" primary large block color="success">Login</v-btn>
+                            </v-card-actions>
+                            <v-card-actions>
+                                <p>Don't have account?
+                                    <router-link to="/signup">Signup</router-link>
+                                </p>
                             </v-card-actions>
                         </v-form>
                     </v-card>
@@ -46,9 +51,15 @@
                 }
             }
         },
-        methods:{
-            login(){
+        created(){
+          if (User.loggedIn()){
+              this.$router.push({name:'forum'})
+          }
+        },
+        methods: {
+            login() {
                 User.login(this.form);
+                // this.$router.push({name: 'forum'})
             }
         }
     }

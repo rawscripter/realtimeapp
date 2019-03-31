@@ -15,7 +15,7 @@ class User {
         const username = res.data.user;
         if (access_token) {
             AppStorage.store(username, access_token);
-            console.log('stored');
+            window.location = '/forum';
         }
     }
 
@@ -33,6 +33,7 @@ class User {
 
     logout() {
         AppStorage.clear();
+        window.location = '/forum';
     }
 
     name() {
