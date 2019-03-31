@@ -14,12 +14,12 @@ class LikeController extends Controller {
         $reply->like()->create(
             ['user_id' => '1']
         );
-        return response('liked',Response::HTTP_CREATED);
+        return response('liked', Response::HTTP_CREATED);
     }
 
     public function disLike(Reply $reply)
     {
-        $reply->like()->where('user_id','1')->first()->delete();
-        return response('disliked',Response::HTTP_NO_CONTENT);
+        $reply->like()->where('user_id', '1')->first()->delete();
+        return response('disliked', Response::HTTP_NO_CONTENT);
     }
 }
