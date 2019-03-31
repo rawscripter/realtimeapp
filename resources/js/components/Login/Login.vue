@@ -2,7 +2,7 @@
     <v-container>
         <v-layout row class="text-xs-center">
             <v-flex xs4 offset-xs4 class="grey lighten-4">
-                <v-container style="position: relative;top: 13%;" class="text-xs-center">
+                <v-container style="position: relative;top: 13%; margin-bottom: 50px" class="text-xs-center">
                     <v-card flat>
                         <v-card-title primary-title>
                             <h4>Login</h4>
@@ -13,7 +13,7 @@
                                     v-model="form.email"
                                     prepend-icon="person"
                                     name="email"
-                                    label="email"
+                                    label="Email"
                                     required>
                             </v-text-field>
                             <v-text-field
@@ -48,13 +48,7 @@
         },
         methods:{
             login(){
-                axios.post('/api/auth/login',this.form)
-                    .then(response => {
-                        console.log(response.data)
-                    })
-                    .catch(error => {
-                        console.log(error.response)
-                    });
+                User.login(this.form);
             }
         }
     }
