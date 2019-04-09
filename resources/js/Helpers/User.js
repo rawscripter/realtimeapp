@@ -51,6 +51,10 @@ class User {
         return false;
     }
 
+    own(id){
+        return this.id() == id ;
+    }
+
 
 }
 

@@ -59,9 +59,6 @@ class Handler extends ExceptionHandler {
         } elseif ($exception instanceof TokenInvalidExceptionn)
         {
             return response(['error' => 'Token is invalid.'], Response::HTTP_BAD_REQUEST);
-        } elseif ($exception instanceof JWTException)
-        {
-            return response(['error' => 'Token is expired.'], Response::HTTP_BAD_REQUEST);
         }
 
         return parent::render($request, $exception);
