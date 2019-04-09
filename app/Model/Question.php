@@ -10,6 +10,8 @@ class Question extends Model {
 
     protected $guarded = [];
 
+    protected $fillable = ['title','body','slug','user_id','category_id'];
+
 
     protected static function boot()
     {

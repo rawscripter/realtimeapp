@@ -1,31 +1,32 @@
 <template>
-    <v-container>
+    <v-container fluid>
         <v-layout row class="text-xs-center">
             <v-flex md6 offset-md3 class="grey lighten-4">
                 <v-container style="position: relative;top: 13%; margin-bottom: 50px" class="text-xs-center">
-                    <v-card-title primary-title>
-                        <h2>Ask Question</h2>
-                    </v-card-title>
-                    <v-form @submit.prevent="askquestion">
-                        <v-text-field
-                                v-model="form.title"
-                                type="text"
-                                name="title"
-                                label="Question Title"
-                                required>
-                        </v-text-field>
-                        <v-autocomplete
-                                :items="categories"
-                                label="Select a category"
-                                v-model="form.category_id"
-                                item-text="name"
-                                item-value="id"
-                        ></v-autocomplete>
-                        <markdown-editor v-model="form.body" ref="markdownEditor"></markdown-editor>
-                        <v-card-actions>
-                            <v-btn type="submit" primary large block color="info">Ask Question</v-btn>
-                        </v-card-actions>
-                    </v-form>
+                    <v-card style="padding: 20px">
+                        <v-card-title primary-title>
+                            <h2>Ask Question</h2>
+                        </v-card-title>
+                        <v-form @submit.prevent="updateQuestion">
+                            <v-text-field
+                                    v-model="form.title"
+                                    type="text"
+                                    name="title"
+                                    label="Question Title"
+                                    required>
+                            </v-text-field>
+                            <markdown-editor v-model="form.body" ref="markdownEditor"></markdown-editor>
+                            <v-card-actions>
+                                <v-btn type="submit" small color="teal">
+                                    Save
+                                </v-btn>
+                                <v-btn @click="cancel" small>
+                                    Cancel
+                                </v-btn>
+
+                            </v-card-actions>
+                        </v-form>
+                    </v-card>
                 </v-container>
             </v-flex>
         </v-layout>
@@ -34,34 +35,31 @@
 
 <script>
     export default {
-        name: "Create",
+        props: ['question'],
         data() {
             return {
-                categories: [],
                 form: {
                     title: null,
                     body: null,
-                    category_id: null,
                 },
                 errors: null,
             }
         },
-        created() {
-            axios.get('/api/category')
-                .then(res=> {
-                    this.categories = res.data.data
-                })
-                .catch(error => console.log(error.response))
+        mounted() {
+            this.form = this.question
         },
-        methods:{
-            askquestion(){
-               axios.post('/api/question',this.form)
-                   .then(res => {
-                       if (res.status == 201){
-                           this.$router.push(res.data.path)
-                       }
-                   })
-                   .catch(error => this.errors = error.response.data.error)
+        methods: {
+            updateQuestion() {
+                axios.patch(`/api/question/${this.form.slug}`, this.form)
+                    .then(res => {
+                        if (res.status == 202) {
+                            this.cancel()
+                        }
+                    })
+                    .catch(error => this.errors = error.response.data.error)
+            },
+            cancel() {
+                EventBus.$emit('cancelEditing')
             }
         }
     }
