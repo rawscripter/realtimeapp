@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <v-layout row class="text-xs-center">
-            <v-flex md6 offset-md3 class="grey lighten-4">
+            <v-flex class="grey lighten-4">
                 <v-container style="position: relative;top: 13%; margin-bottom: 50px" class="text-xs-center">
                     <v-card style="padding: 20px">
                         <v-card-title primary-title>

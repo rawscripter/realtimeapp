@@ -35,8 +35,8 @@ class CategoryController extends Controller
     {
         $input = $request->all();
         $input['slug'] = str_slug($request->name);
-        Category::create($input);
-        return response('Created', Response::HTTP_CREATED);
+        $category = Category::create($input);
+        return response(new CategoryResource($category), Response::HTTP_CREATED);
     }
 
     /**
@@ -62,7 +62,7 @@ class CategoryController extends Controller
         $input = $request->all();
         $input['slug'] = str_slug($request->name);
         $category->update($input);
-        return response('Updated', Response::HTTP_ACCEPTED);
+        return response(new CategoryResource($category), Response::HTTP_ACCEPTED);
     }
 
     /**

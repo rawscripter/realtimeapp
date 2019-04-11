@@ -34,7 +34,10 @@ class ReplyController extends Controller
      */
     public function store(Question $question,Request $request)
     {
-        $reply = $question->replies()->create($request->all());
+
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
+        $reply = $question->replies()->create($input);
         return response(new ReplyResource($reply), Response::HTTP_CREATED);
     }
 

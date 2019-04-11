@@ -5,10 +5,11 @@ Vue.use(VueRouter)
 import Login from '../components/Login/Login'
 import Signup from "../components/Login/Signup";
 import Forum from "../components/Forum/Forum";
-import Create from "../components/Forum/Create";
+import Create from "../components/Forum/CreateQuestion";
 import Logout from "../components/Logout";
 import SingleQuestion from "../components/Forum/SingleQuestion";
 import EditQuestion from "../components/Forum/EditQuestion";
+import CreateCategory from "../components/Category/CreateCategory";
 
 
 const routes = [
@@ -16,6 +17,7 @@ const routes = [
     {path: '/signup', component: Signup},
     {path: '/forum', component: Forum, name: 'forum'},
     {path: '/ask', component: Create},
+    {path: '/category', component: CreateCategory},
     {path: '/logout', component: Logout},
     {path: '/question/:slug', component: SingleQuestion, name: 'SingleQuestion'},
     {path: '/edit/:slug', component: EditQuestion, name: 'EditQuestion'},

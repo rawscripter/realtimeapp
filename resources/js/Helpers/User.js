@@ -55,6 +55,11 @@ class User {
         return this.id() == id ;
     }
 
+    admin(){
+        return this.id() == 13 ? true : false;
+
+    }
+
 
 }
 
