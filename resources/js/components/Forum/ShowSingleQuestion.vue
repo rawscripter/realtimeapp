@@ -11,7 +11,7 @@
                 </p>
             </div>
             <v-spacer></v-spacer>
-            <v-btn color="teal" dark>{{question.reply_count}} Replies</v-btn>
+            <v-btn color="teal" dark>{{replyCount}} Replies</v-btn>
         </v-card-title>
 
         <v-card-text v-html="body">
@@ -39,7 +39,8 @@
         isUser: false,
         data() {
             return {
-                own: User.own(this.question.user_id)
+                own: User.own(this.question.user_id),
+                replyCount: this.question.reply_count
             }
         },
         computed: {
@@ -56,6 +57,16 @@
             edit() {
                 EventBus.$emit('startEditing')
             }
+        },
+        created() {
+            Echo.private('App.User.' + User.id())
+                .notification((notification) => {
+                    console.log(notification);
+                    if (notification.path == this.question.path){
+                        this.replyCount++;
+                    }
+                });
+
         }
     }
 </script>

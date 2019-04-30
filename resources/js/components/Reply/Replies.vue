@@ -35,7 +35,12 @@
                 EventBus.$on('newReply', (reply) => {
                     this.content.unshift(reply);
                 })
+                Echo.private('App.User.' + User.id())
+                    .notification((notification) => {
+                        this.content.unshift(notification.reply);
+                    });
             },
+
 
             destroy() {
                 EventBus.$on('deleteReply', (index) => {
